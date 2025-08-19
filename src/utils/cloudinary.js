@@ -8,13 +8,14 @@ import fs from "fs"
         api_secret: process.env.CLOUDINARY_SECRET_KEY // Click 'View API Keys' above to copy your API secret
     });
 
-const uploadOnCloudinary=async(localFilePath)=>{
+const uploadOnCloudinary=  async(localFilePath)=>{
     try{
         if(!localFilePath) return null
-        cloudinary.uploader.upload(localFilePath,{
+        const response=await cloudinary.uploader.upload(localFilePath,{
             resource_type:"auto"
         })
-        console.log("file is uploaded on cloudinary",response.url);
+        //console.log("file is uploaded on cloudinary",response.url);
+        //fs.unlinkSync(localFilePath) // Delete the local file after upload
         return response;
     }catch(error){
         fs.unlinkSync(localFilePath)
@@ -22,4 +23,4 @@ const uploadOnCloudinary=async(localFilePath)=>{
     }
 }
     
-export {uploadOnCloudinary}
+export { uploadOnCloudinary }
